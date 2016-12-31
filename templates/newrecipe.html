@@ -1,0 +1,52 @@
+{% extends "main.html" %}
+{% block content %}
+
+    <div class="row banner menu">
+        <div class="col-md-11 col-md-offset-1 padding-none">
+            <h1>New Recipe</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-1 padding-top">
+            <form action='{{url_for('newRecipe')}}' method='post'>
+                <div class='form-group'>
+                    <label for="name">Name:</label>
+                    <input type ="text" maxlength="50" class="form-control" name="name" placeholder="Name of the recipe" value="{{name}}">
+
+
+                    <label for="description">Description</label>
+                    <textarea class="form-control" maxlength="1000" rows="3" name="description" placeholder="Description of the recipe">{{description}}</textarea>
+
+                    </br>
+
+                    <label for='ingredients'>Ingredients</label>
+                    {% if items != []%}
+                        {{items}}
+                        {% for item in items %}
+                            <textarea class="form-control" maxlength="250" name='ingredient'  rows='1' placeholder='ingredient'>{{item}}</textarea>
+                            </br>
+                        {% endfor %}
+                    {% endif %}
+
+                    <textarea class="form-control" maxlength="250" name='ingredient' rows='1' placeholder='ingredient'></textarea>
+
+                    <input type="submit" class="btn btn-default glyphicon glyphicon-plus" id="submit" type="submit" name="addIngredient" value="+">
+
+
+                    </br>
+
+                    <label for='instructions'>Instructions</label>
+                    <textarea class="form-control" maxlength="50000" name='instructions'  rows='10' placeholder='instructions'>{{instructions}}</textarea>
+
+                    </br>
+
+                    <button type="submit" class="btn btn-default" id="submit" type="submit">
+                        <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> Create Recipe
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
