@@ -22,6 +22,7 @@ class Recipe(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     description = Column(String(50000))
+    ingredients = Column(String(50000))
     instructions = Column(String(50000))
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
@@ -38,26 +39,26 @@ class Recipe(Base):
         }
 
 
-class Ingredient(Base):
-    __tablename__ = 'ingredient'
+# class Ingredient(Base):
+#     __tablename__ = 'ingredient'
 
-    id = Column(Integer, primary_key=True)
-    content = Column(String(5000))
-    recipe_id = Column(Integer, ForeignKey('recipe.id'))
-    recipe = relationship(Recipe)
-    user_id = Column(Integer, ForeignKey('user.id'))
-    user = relationship(User)
+#     id = Column(Integer, primary_key=True)
+#     content = Column(String(5000))
+#     recipe_id = Column(Integer, ForeignKey('recipe.id'))
+#     recipe = relationship(Recipe)
+#     user_id = Column(Integer, ForeignKey('user.id'))
+#     user = relationship(User)
 
-    @property
-    def serialize(self):
-        """Return object data in easily serializeable format"""
-        return {
-            'content': self.content,
-            'recipe': self.recipe,
-            'recipe_id': self.description,
-        }
+#     @property
+#     def serialize(self):
+#         """Return object data in easily serializeable format"""
+#         return {
+#             'content': self.content,
+#             'recipe': self.recipe,
+#             'recipe_id': self.description,
+#         }
 
-engine = create_engine('sqlite:///recipeslist.db')
+engine = create_engine('sqlite:///recipes.db')
 
 
 Base.metadata.create_all(engine)
