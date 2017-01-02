@@ -9,12 +9,11 @@
 
     <div class="row">
         <div class="col-md-6 col-md-offset-1 padding-top">
-            <form action='{{url_for('newRecipe')}}' method='post'>
+            <form action='{{url_for('editRecipe', recipe_id=id)}}' method='post'>
                 <div class='form-group'>
                     <label for="name">Name:</label>
                     <input type ="text" maxlength="50" class="form-control" name="name" placeholder="Name of the recipe" value="{{name}}">
-
-
+                    
                     <label for="description">Description</label>
                     <textarea class="form-control" maxlength="1000" rows="3" name="description" placeholder="Description of the recipe">{{description}}</textarea>
 
@@ -22,7 +21,6 @@
 
                     <label for='ingredients'>Ingredients</label>
                     {% if items != []%}
-                        {{items}}
                         {% for item in items %}
                             <textarea class="form-control" maxlength="250" name='ingredient'  rows='1' placeholder='ingredient'>{{item}}</textarea>
                             </br>
@@ -31,7 +29,7 @@
 
                     <textarea class="form-control" maxlength="250" name='ingredient' rows='1' placeholder='ingredient'></textarea>
 
-                    <input type="submit" class="btn btn-default glyphicon glyphicon-plus" id="submit" type="submit" name="addIngredient" value="+">
+                    <input type="submit" class="btn btn-default glyphicon glyphicon-plus" id="submit" type="submit" name="submit" value="+">
 
 
                     </br>
@@ -41,7 +39,7 @@
 
                     </br>
 
-                    <button type="submit" class="btn btn-default" id="submit" type="submit">
+                    <button type="submit" class="btn btn-default" id="submit" type="submit" name="submit" value="save">
                         <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> Save Recipe
                     </button>
 
