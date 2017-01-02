@@ -53,12 +53,12 @@ def newRecipe():
         ingredients = request.form.getlist('ingredient')
         instructions = request.form['instructions']
         for ingredient in ingredients:
-                if ingredient != '':
-                    items.append(ingredient)
-        try:
-            if request.form['addIngredient'] == '+':
+            if ingredient != '':
+                items.append(ingredient)
+        
+        if request.form['submit'] == '+':
                 return render_template('newrecipe.html', name=name, description=description, items=items, instructions=instructions)
-        except:
+        elif request.form['submit'] == 'new':
             newRecipe = Recipe(name=name, description=description, ingredients=encIngredients(items), 
                                 instructions=instructions)
             session.add(newRecipe)
@@ -68,9 +68,47 @@ def newRecipe():
         return render_template('newrecipe.html', name='', description='', items=[], instructions='')
 
 
+# Edit a recipe
+@app.route('/recipes/<int:recipe_id>/edit', methods=['GET', 'POST'])
+def editRecipe(recipe_id):
+    recipeToEdit = session.query(Recipe).filter_by(id=recipe_id).one()
+    
+    if request.method == 'POST':
+        items = []
+        name = request.form['name']
+        description = request.form['description']
+        ingredients = request.form.getlist('ingredient')
+        instructions = request.form['instructions']
+        for ingredient in ingredients:
+            if ingredient != '':
+                items.append(ingredient)    
 
+        if request.form['submit'] == '+':
+            return render_template('editrecipe.html', id=recipe_id, name=name, description=description, items=items, instructions=instructions)
+        elif request.form['submit'] == 'save':
+            recipeToEdit.name = name
+            recipeToEdit.description = description
+            recipeToEdit.ingredients = encIngredients(items)
+            recipeToEdit.instructions = instructions
+            session.add(recipeToEdit)
+            session.commit()
+            return redirect(url_for('allRecipes'))
+    else:
+        return render_template('editrecipe.html', id=recipe_id, name=recipeToEdit.name, description=recipeToEdit.description, 
+                            items=decIngredients(recipeToEdit.ingredients), instructions=recipeToEdit.instructions)
 
+# Delete a recipe
+@app.route('/recipes/<int:recipe_id>/delete/', methods=['GET', 'POST'])
+def deleteRecipe(recipe_id):
+    recipeToDelete = session.query(Recipe).filter_by(id=recipe_id).one()
+    if request.method == 'POST':
+        print 'delete recipe'
+        session.delete(recipeToDelete)
+        session.commit()
+        return redirect(url_for('allRecipes'))
 
+    else:
+        return render_template('deleterecipe.html', recipe=recipeToDelete)
 
 
 
