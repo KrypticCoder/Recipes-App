@@ -303,7 +303,7 @@ def allRecipes():
 def showRecipe(recipe_id):
     recipe = session.query(Recipe).filter_by(id=recipe_id).one()
     items = decIngredients(recipe.ingredients)
-    if 'username' not in login_session:
+    if 'username' not in login_session or recipe.user_id != login_session['user_id']:
         return render_template('publicrecipe.html', recipe=recipe, items=items)
     else:
         return render_template('recipe.html', recipe=recipe, items=items)
