@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <div class = 'flash'>
+    <div class='flash'>
         {% with messages = get_flashed_messages() %}
             {% if messages %}  
                 <ul>
@@ -60,7 +60,7 @@
                 </div>
             </form>
 
-            <a href = '{{url_for('allRecipes')}}'>
+            <a href = '{{url_for('showRecipe', recipe_id=id)}}'>
                     <button class="btn btn-default delete">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
             </a>

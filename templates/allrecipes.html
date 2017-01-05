@@ -1,10 +1,10 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
-    <div class="row banner main">
+    <div class="row banner menu">
         <div class="col-md-1"></div>
         <div class="col-md-11 padding-none">
-            <h1>Restaurants</h1>
+            <h1>Recipes</h1>
         </div>
     </div>
 
@@ -36,9 +36,9 @@
         <a href ='{{url_for('showRecipe', recipe_id=recipe.id)}}'>
             <div class="row">
                 <div class="col-md-1"></div>
-                    <div class="col-md-10 restaurant-list">
-                        <h3>{{recipe.name}}</h3>
-                    </div>
+                <div class="col-md-10 restaurant-list">
+                    <h3>{{recipe.name}}</h3>
+                </div>
                 <div class="col-md-1"></div>
             </div>
         </a>

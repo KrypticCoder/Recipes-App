@@ -303,11 +303,16 @@ def allRecipes():
 def showRecipe(recipe_id):
     recipe = session.query(Recipe).filter_by(id=recipe_id).one()
     items = decIngredients(recipe.ingredients)
-    return render_template('recipe.html', recipe=recipe, items=items)
+    if 'username' not in login_session:
+        return render_template('publicrecipe.html', recipe=recipe, items=items)
+    else:
+        return render_template('recipe.html', recipe=recipe, items=items)
 
 # Create a new recipe
 @app.route('/recipes/new/', methods=['GET', 'POST'])
 def newRecipe():
+    if 'username' not in login_session:
+        return redirect('/login')
     if request.method == 'POST':
         items = []
         name = request.form['name']
@@ -315,7 +320,7 @@ def newRecipe():
         ingredients = request.form.getlist('ingredient')
         instructions = request.form['instructions']
         for ingredient in ingredients:
-            if ingredient != '':
+            if ingredient != '' and ingredient != '@@@@@':
                 items.append(ingredient)
         
         if request.form['submit'] == '+':
@@ -326,7 +331,7 @@ def newRecipe():
                 return render_template('newrecipe.html', description=description, items = items, instructions=instructions)
             else:
                 newRecipe = Recipe(name=name, description=description, ingredients=encIngredients(items), 
-                                    instructions=instructions)
+                                    instructions=instructions, user_id=login_session['user_id'])
                 session.add(newRecipe)
                 session.commit()
                 flash('Recipe successfully created')
@@ -340,6 +345,14 @@ def newRecipe():
 def editRecipe(recipe_id):
     recipeToEdit = session.query(Recipe).filter_by(id=recipe_id).one()
     
+    # user needs to be logged in
+    if 'username' not in login_session:
+        return redirect('/login')
+
+    # user needs to be the author of the recipe. Error script generated if incorrect user tries to visit this url
+    if recipeToEdit.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to edit this recipe');}</script><body onload='myFunction()''>"
+
     if request.method == 'POST':
         items = []
         name = request.form['name']
@@ -347,7 +360,7 @@ def editRecipe(recipe_id):
         ingredients = request.form.getlist('ingredient')
         instructions = request.form['instructions']
         for ingredient in ingredients:
-            if ingredient != '':
+            if ingredient != '' and ingredient != '@@@@@':
                 items.append(ingredient)    
 
         if request.form['submit'] == '+':
@@ -373,6 +386,15 @@ def editRecipe(recipe_id):
 @app.route('/recipes/<int:recipe_id>/delete/', methods=['GET', 'POST'])
 def deleteRecipe(recipe_id):
     recipeToDelete = session.query(Recipe).filter_by(id=recipe_id).one()
+
+    # user needs to be logged in
+    if 'username' not in login_session:
+        return redirect('/login')
+
+    # user needs to be the author of the recipe. Error script generated if incorrect user tries to visit this url
+    if recipeToDelete.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to delete this recipe');}</script><body onload='myFunction()''>"
+
     if request.method == 'POST':
         print 'delete recipe'
         session.delete(recipeToDelete)

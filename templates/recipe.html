@@ -1,12 +1,15 @@
 {% extends "main.html" %}
 {% block content %}
-
-    <div class="row banner main">
+{% include "header.html" %}
+    <div class="row banner menu">
         <div class="col-md-1"></div>
         <div class="col-md-11 padding-none">
             <h1>{{recipe.name}}</h1>
         </div>
     </div>
+    
+    </br>
+
 
     <a href='{{url_for('deleteRecipe', recipe_id=recipe.id)}}'>
         <button class="btn btn-default">
@@ -19,15 +22,16 @@
         </button>
     </a>
 
-    </br>
-
-    <h3>Description</h3>
-    <div> {{recipe.description}}</div>
 
     </br>
 
-    <h3>Ingredients</h3>
-    <div>
+    <h3 class="recipe">Description</h3>
+    <div class="restaurant-list"> {{recipe.description}}</div>
+
+    </br>
+
+    <h3 class="recipe">Ingredients</h3>
+    <div class="restaurant-list">
         {% for item in items %}
             <li>{{item}}</li>
         {% endfor %}
@@ -36,9 +40,10 @@
 
     </br>
 
-    <h3>Instructions</h3>
-    <div>
+    <h3 class="recipe">Instructions</h3>
+    <div class="restaurant-list">
         {{recipe.instructions}}
-    <div>   
+    <div>  
+    
 
 {% endblock %}
