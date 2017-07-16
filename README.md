@@ -1,6 +1,6 @@
-#Recipes App
+# Recipes App
 
-##Description
+## Description
 Web application where users can read and post their favorite recipes. Users can go to the homepage at 'localhost:8000/' or to 'localhost:8000/recipes' and view a list of recipe names. The content of a particular recipe is displayed by clicking on a recipe name. Users can log in through 3rd party oauth system using Facebook or Google. If a user is logged in, they can create, edit, and delete their own recipes.
 
 ## Requirements
@@ -8,7 +8,7 @@ Web application where users can read and post their favorite recipes. Users can 
 - [VirtualBox](https://www.virtualbox.org/)
 - [Python ~2.7](https://www.python.org/)
 
-##Setup
+## Setup
 1. Download or clone the [fullstack-nanodegree-vm repository](https://github.com/udacity/fullstack-nanodegree-vm).
 
 2. On your local system, locate the *vagrant* folder and inside it copy the contents of this current repository, by either downloading it or cloning it. 
