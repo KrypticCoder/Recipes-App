@@ -10,10 +10,10 @@ Web application where users can read and post their favorite recipes. Users can 
 1. Download or clone the [fullstack-nanodegree-vm repository](https://github.com/udacity/fullstack-nanodegree-vm).
 
 2. Install all the required modules by typing `pip install` and then each of the following:
-- flask
-- sqlalchemy
-- oauth2client
-- requests
+	- flask
+	- sqlalchemy
+	- oauth2client
+	- requests
 
 
 ## Usage 
