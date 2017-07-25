@@ -22,6 +22,8 @@ Web application where users can read and post their favorite recipes. Users can 
 - Run project: `python project.py`
 - View project: visit `localhost:8000/`
 
+![Created New Recipe](http://i.imgur.com/5PjFFCd.png)
+
 ## API Endpoints
 |Request | What you get |
 |--------------|:-----------:|
